@@ -7,15 +7,15 @@ import validateJWT from "../jwt/validateJwt.js";
 const router = Router();
 
 router.post('/new', [
-    check('name', 'El nombre es obligatorio').not().isEmpty(),
-    check('email', 'El email es obligatorio').isEmail(),
-    check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
+    check('name', ' - El nombre es obligatorio').not().isEmpty(),
+    check('email', '- El email debe ser válido').isEmail(),
+    check('password', '- La contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
     expressValidator
 ], crearUsuario);
 
 router.post('/', [
-    check('email', 'El email es obligatorio').isEmail(),
-    check('password', 'La contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
+    check('email', '- El email debe ser válido').isEmail(),
+    check('password', '- La contraseña debe tener al menos 6 caracteres').isLength({ min: 6 }),
     expressValidator
 ], iniciarSesion);
 
