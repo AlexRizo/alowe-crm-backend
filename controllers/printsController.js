@@ -1,27 +1,26 @@
 import cloudinary from "../helpers/cloudinary.js";
-import Post from "../models/Post.js";
+import { Print } from "../models/index.js";
 
-export const createPost = async (req, res) => {
-    const { socialNetworks, ...postReq } = req.body;
+export const createDesign = async (req, res) => {
+    const printReq = req.body;
     
-    const newPost = new Post(postReq);
-    
-    newPost.socialNetworks = JSON.parse(socialNetworks);
-    
+    const newPrint = new Print(printReq);
+
     try {
-        newPost.user = req.uid;
-        newPost.team = req.tid;
+        newPrint.user = req.uid;
+        newPrint.team = req.tid;
+        newPrint.printSize = JSON.parse(printReq.printSize);
                 
         if (req.files?.file) {
             const { secure_url } = await cloudinary.uploader.upload(req.files.file.tempFilePath);
-            newPost.file = secure_url;
+            newPrint.file = secure_url;
         }
 
-        await newPost.save();
+        await newPrint.save();
 
         res.status(200).json({ 
             ok: true,
-            post: newPost
+            print: newPrint
         });
     } catch (error) {
         console.log(error);

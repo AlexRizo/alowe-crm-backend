@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import validateJWT from '../jwt/validateJwt.js';
-import { getEvents, createEvent, updateEvent, deleteEvent, createPost } from '../controllers/index.js';
+import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createDesign } from '../controllers/index.js';
 import { expressValidator } from '../middlewares/expressValidator.js';
 import { isDate } from '../helpers/isDate.js';
 const router = Router();
@@ -33,6 +33,15 @@ router.post('/new-post-req', [
     check('description', '- La descripción debe tener al menos 1020 caracteres').isLength({ max: 1020 }),
     expressValidator
 ], createPost)
+
+router.post('/new-design-req/print', [
+    check('printType', 'El tipo de impresión es obligatorio').not().isEmpty(),
+    check('printSize', 'El tamaño de impresión es obligatorio').not().isEmpty(),
+    check('printContent', 'El contenido de impresión es obligatorio').not().isEmpty(),
+    check('printDescription', 'La descripción de impresión es obligatoria').not().isEmpty(),
+    check('printDate').custom(isDate),
+    expressValidator
+], createDesign);
 
 router.put('/update/:id', [
     check('title', 'El titulo es obligatorio').not().isEmpty(),
