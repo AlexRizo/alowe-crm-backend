@@ -37,8 +37,8 @@ router.post('/new-post-req', [
 router.post('/new-design-req/print', [
     check('printType', 'El tipo de impresión es obligatorio').not().isEmpty(),
     check('printSize', 'El tamaño de impresión es obligatorio').not().isEmpty(),
-    check('printContent', 'El contenido de impresión es obligatorio').not().isEmpty(),
-    check('printDescription', 'La descripción de impresión es obligatoria').not().isEmpty(),
+    check('printDescription', 'El contenido de impresión es obligatorio').not().isEmpty(),
+    check('description', 'La descripción de impresión es obligatoria').not().isEmpty(),
     check('deadline').custom(isDate),
     expressValidator
 ], createDesign);

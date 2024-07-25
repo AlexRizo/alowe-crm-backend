@@ -1,4 +1,4 @@
-import cloudinary from "../helpers/cloudinary.js";
+import { cloudinaryUpload } from "../helpers/cloudinaryUpload.js";
 import { Print } from "../models/index.js";
 
 export const createDesign = async (req, res) => {
@@ -12,8 +12,7 @@ export const createDesign = async (req, res) => {
         newPrint.printSize = JSON.parse(printReq.printSize);
                 
         if (req.files?.file) {
-            const { secure_url } = await cloudinary.uploader.upload(req.files.file.tempFilePath);
-            newPrint.file = secure_url;
+            newPrint.file = await cloudinaryUpload(req.files.file)
         }
 
         await newPrint.save();

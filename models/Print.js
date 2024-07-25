@@ -9,11 +9,11 @@ const PrintSchema = new Schema({
         type: Object,
         required: true,
     },
-    printContent: {
+    printDescription: {
         type: String,
         required: true,
     },
-    printDescription: {
+    description: {
         type: String,
         required: true,
     },
