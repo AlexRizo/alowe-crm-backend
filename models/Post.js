@@ -13,7 +13,7 @@ const PostSchema = new Schema({
         type: [String],
         required: true,
     },
-    postDate: {
+    deadline: {
         type: Date,
         required: true,
     },

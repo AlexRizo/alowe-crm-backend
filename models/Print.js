@@ -17,7 +17,7 @@ const PrintSchema = new Schema({
         type: String,
         required: true,
     },
-    printDate: {
+    deadline: {
         type: Date,
         required: true,
     },

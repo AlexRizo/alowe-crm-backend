@@ -27,7 +27,7 @@ router.post('/new-post-req', [
     check('title', '- El titulo debe tener al menos 5 caracteres').isLength({ min: 5 }),
     check('postDescription', '- La descripción de la publicación es obligatoria').not().isEmpty(),
     check('postDescription', '- La descripción de la publicación debe tener al menos 1020 caracteres').isLength({ max: 1020 }),
-    check('postDate').custom(isDate),
+    check('deadline').custom(isDate),
     check('socialNetworks', '- Debes seleccionar al menos una red social').not().isEmpty(),
     check('description', '- La descripción es obligatoria').not().isEmpty(),
     check('description', '- La descripción debe tener al menos 1020 caracteres').isLength({ max: 1020 }),
@@ -39,7 +39,7 @@ router.post('/new-design-req/print', [
     check('printSize', 'El tamaño de impresión es obligatorio').not().isEmpty(),
     check('printContent', 'El contenido de impresión es obligatorio').not().isEmpty(),
     check('printDescription', 'La descripción de impresión es obligatoria').not().isEmpty(),
-    check('printDate').custom(isDate),
+    check('deadline').custom(isDate),
     expressValidator
 ], createDesign);
 
