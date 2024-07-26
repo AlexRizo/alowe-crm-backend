@@ -1,12 +1,12 @@
 import { cloudinaryUpload } from "../helpers/cloudinaryUpload.js";
 import { Print } from "../models/index.js";
 
-export const createDesign = async (req, res) => {
+export const createPrint = async (req, res) => {
     const printReq = req.body;
     
-    const newPrint = new Print(printReq);
-
     try {
+        const newPrint = new Print(printReq);
+        
         newPrint.user = req.uid;
         newPrint.team = req.tid;
         newPrint.printSize = JSON.parse(printReq.printSize);

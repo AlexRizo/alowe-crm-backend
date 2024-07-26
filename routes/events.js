@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import validateJWT from '../jwt/validateJwt.js';
-import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createDesign } from '../controllers/index.js';
+import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createDigital } from '../controllers/index.js';
 import { expressValidator } from '../middlewares/expressValidator.js';
 import { isDate } from '../helpers/isDate.js';
 const router = Router();
@@ -41,7 +41,15 @@ router.post('/new-design-req/print', [
     check('description', 'La descripción de impresión es obligatoria').not().isEmpty(),
     check('deadline').custom(isDate),
     expressValidator
-], createDesign);
+], createPrint);
+
+router.post('/new-design-req/digital', [
+    check('orientation', 'La orientación del diseño es obligatoria').not().isEmpty(),
+    check('digitalDescription', 'El contenido del diseño es obligatorio').not().isEmpty(),
+    check('description', 'La descripción del diseño es obligatoria').not().isEmpty(),
+    check('deadline').custom(isDate),
+    expressValidator
+], createDigital);
 
 router.put('/update/:id', [
     check('title', 'El titulo es obligatorio').not().isEmpty(),

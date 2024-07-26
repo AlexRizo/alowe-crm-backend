@@ -1,17 +1,19 @@
-import { Event, Post, Print } from '../models/index.js';
+import { Digital, Event, Post, Print } from '../models/index.js';
 
 export const getEvents = async (req, res) => {
     const { tid } = req;
     const events = await Event.find().where({ team: tid }).populate('user', 'name');
     const posts = await Post.find().where({ team: tid }).populate('user', 'name');
     const prints = await Print.find().where({ team: tid }).populate('user', 'name');
+    const digital = await Digital.find().where({ team: tid }).populate('user', 'name');
     
     res.status(200).json({
         ok: true,
         response: {
             posts,
             events,
-            prints
+            prints,
+            digital
         }
     });
 };
