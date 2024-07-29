@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import validateJWT from '../jwt/validateJwt.js';
-import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createDigital } from '../controllers/index.js';
+import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createTshirt, createDigital } from '../controllers/index.js';
 import { expressValidator } from '../middlewares/expressValidator.js';
 import { isDate } from '../helpers/isDate.js';
 const router = Router();
@@ -44,12 +44,22 @@ router.post('/new-design-req/print', [
 ], createPrint);
 
 router.post('/new-design-req/digital', [
+    check('digitalType', 'El tipo de diseño es obligatorio').not().isEmpty(),
     check('orientation', 'La orientación del diseño es obligatoria').not().isEmpty(),
     check('digitalDescription', 'El contenido del diseño es obligatorio').not().isEmpty(),
     check('description', 'La descripción del diseño es obligatoria').not().isEmpty(),
     check('deadline').custom(isDate),
     expressValidator
 ], createDigital);
+
+router.post('/new-design-req/t-shirt', [
+    check('tshirtType', 'El tipo de camiseta es obligatorio').not().isEmpty(),
+    check('inks', 'El número de tintas es obligatorio').isNumeric(),
+    check('tshirtDescription', 'La descripción de la camiseta es obligatoria').not().isEmpty(),
+    check('description', 'La descripción es obligatoria').not().isEmpty(),
+    check('deadline').custom(isDate),
+    expressValidator
+], createTshirt);
 
 router.put('/update/:id', [
     check('title', 'El titulo es obligatorio').not().isEmpty(),

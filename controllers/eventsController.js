@@ -1,11 +1,15 @@
-import { Digital, Event, Post, Print } from '../models/index.js';
+import { Digital, Event, Post, Print, Tshirt } from '../models/index.js';
 
 export const getEvents = async (req, res) => {
     const { tid } = req;
-    const events = await Event.find().where({ team: tid }).populate('user', 'name');
-    const posts = await Post.find().where({ team: tid }).populate('user', 'name');
-    const prints = await Print.find().where({ team: tid }).populate('user', 'name');
-    const digital = await Digital.find().where({ team: tid }).populate('user', 'name');
+
+    const { start, end } = req.query;
+
+    const events = await Event.find({ team: tid, start: { $gte: new Date(start) }, end: { $lte: new Date(end) } }).populate('user', 'name');
+    const posts = await Post.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
+    const prints = await Print.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
+    const digital = await Digital.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
+    const tshirts = await Tshirt.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
     
     res.status(200).json({
         ok: true,
@@ -13,7 +17,8 @@ export const getEvents = async (req, res) => {
             posts,
             events,
             prints,
-            digital
+            digital,
+            tshirts
         }
     });
 };
