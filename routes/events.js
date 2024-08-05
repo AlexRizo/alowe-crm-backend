@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import validateJWT from '../jwt/validateJwt.js';
-import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createTshirt, createDigital } from '../controllers/index.js';
+import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createTshirt, createDigital, createOther } from '../controllers/index.js';
 import { expressValidator } from '../middlewares/expressValidator.js';
 import { isDate } from '../helpers/isDate.js';
 const router = Router();
@@ -60,6 +60,12 @@ router.post('/new-design-req/t-shirt', [
     check('deadline').custom(isDate),
     expressValidator
 ], createTshirt);
+
+router.post('/new-design-req/other', [
+    check('description', 'La descripción es obligatoria').not().isEmpty(),
+    check('deadline').custom(isDate),
+    expressValidator
+], createOther);
 
 router.put('/update/:id', [
     check('title', 'El titulo es obligatorio').not().isEmpty(),

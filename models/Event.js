@@ -42,7 +42,7 @@ const EventSchema = new Schema({
     type: {
         type: String,
         required: true,
-        default: "event",
+        default: "evento",
     },
 });
 

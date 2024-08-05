@@ -1,18 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const PrintSchema = new Schema({
-    printType: {
-        type: String,
-        required: true,
-    },
-    printSize: {
-        type: Object,
-        required: true,
-    },
-    printDescription: {
-        type: String,
-        required: true,
-    },
+const OtherSchema = new Schema({
     description: {
         type: String,
         required: true,
@@ -45,14 +33,14 @@ const PrintSchema = new Schema({
     type: {
         type: String,
         required: true,
-        default: "impresion",
+        default: "otro",
     },
 });
 
-PrintSchema.method("toJSON", function() {
+OtherSchema.method("toJSON", function() {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
 });
 
-export default model("Print", PrintSchema);
+export default model("Other", OtherSchema);

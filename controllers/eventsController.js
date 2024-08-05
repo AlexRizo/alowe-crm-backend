@@ -1,16 +1,25 @@
-import { Digital, Event, Post, Print, Tshirt } from '../models/index.js';
+import { Digital, Event, Other, Post, Print, Tshirt } from '../models/index.js';
 
 export const getEvents = async (req, res) => {
     const { tid } = req;
 
     const { start, end } = req.query;
-
-    const events = await Event.find({ team: tid, start: { $gte: new Date(start) }, end: { $lte: new Date(end) } }).populate('user', 'name');
-    const posts = await Post.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
-    const prints = await Print.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
-    const digital = await Digital.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
-    const tshirts = await Tshirt.find({ team: tid, deadline: { $gte: new Date(start), $lte: new Date(end) } }).populate('user', 'name');
     
+    let startDate = new Date(start), 
+        endDate = new Date(end);
+    
+    if (startDate.getTime() === endDate.getTime()) {
+        startDate = new Date(startDate.getFullYear(), startDate.getMonth() - 1, 1);
+        endDate = new Date(endDate.getFullYear(), endDate.getMonth() + 2, 0);
+    }
+
+    const events = await Event.find({ team: tid, start: { $gte: startDate }, end: { $lte: endDate } }).populate('user', 'name');
+    const posts = await Post.find({ team: tid, deadline: { $gte: startDate, $lte: endDate } }).populate('user', 'name');
+    const prints = await Print.find({ team: tid, deadline: { $gte: startDate, $lte: endDate } }).populate('user', 'name');
+    const digital = await Digital.find({ team: tid, deadline: { $gte: startDate, $lte: endDate } }).populate('user', 'name');
+    const tshirts = await Tshirt.find({ team: tid, deadline: { $gte: startDate, $lte: endDate } }).populate('user', 'name');
+    const others = await Other.find({ team: tid, deadline: { $gte: startDate, $lte: endDate } }).populate('user', 'name');
+        
     res.status(200).json({
         ok: true,
         response: {
@@ -18,7 +27,8 @@ export const getEvents = async (req, res) => {
             events,
             prints,
             digital,
-            tshirts
+            tshirts,
+            others
         }
     });
 };

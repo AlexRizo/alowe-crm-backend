@@ -16,7 +16,8 @@ const UserSchema = Schema({
     },
     role: {
         type: String,
-        required: true
+        required: true,
+        default: 'USER_ROLE' // USER_ROLE ||  || ADMIN_ROLE
     },
     createdAt: {
         type: Date,

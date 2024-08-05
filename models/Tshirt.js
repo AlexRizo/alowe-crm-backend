@@ -45,7 +45,7 @@ const TshirtSchema = new Schema({
     type: {
         type: String,
         required: true,
-        default: "tshirt",
+        default: "playera",
     },
 });
 

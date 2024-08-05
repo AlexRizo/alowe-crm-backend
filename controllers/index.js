@@ -5,3 +5,4 @@ export * from './teamController.js';
 export * from './printsController.js';
 export * from './DigitalController.js';
 export * from './tshirtController.js';
+export * from './otherController.js';

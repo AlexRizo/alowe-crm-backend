@@ -45,7 +45,7 @@ const PostSchema = new Schema({
     type: {
         type: String,
         required: true,
-        default: "post",
+        default: "publicacion",
     },
 });
 
