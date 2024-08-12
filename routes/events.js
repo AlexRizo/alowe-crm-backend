@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import validateJWT from '../jwt/validateJwt.js';
-import { getEvents, createEvent, updateEvent, deleteEvent, createPost, createPrint, createTshirt, createDigital, createOther } from '../controllers/index.js';
+import { getEvents, getEvent, createEvent, updateEvent, deleteEvent, createPost, createPrint, createTshirt, createDigital, createOther } from '../controllers/index.js';
 import { expressValidator } from '../middlewares/expressValidator.js';
 import { isDate } from '../helpers/isDate.js';
 const router = Router();
@@ -9,6 +9,8 @@ const router = Router();
 router.use(validateJWT);
 
 router.get('/', getEvents);
+
+router.get('/:id', getEvent)
 
 router.post('/new-event-req', [
     check('title', '- El titulo es obligatorio').not().isEmpty(),

@@ -1,5 +1,30 @@
 import { Digital, Event, Other, Post, Print, Tshirt } from '../models/index.js';
 
+export const getEvent = async (req, res) => {
+    const eventId = req.params.id;
+    try {
+        const event = await Event.findById(eventId).populate('user', 'name');
+        
+        if (!event) {
+            return res.status(404).json({
+                ok: false,
+                message: 'No se ha encontrado ningún evento :(.'
+            });
+        }
+
+        res.status(200).json({
+            ok: true,
+            event
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Hable con el administrador'
+        });
+    }
+};
+
 export const getEvents = async (req, res) => {
     const { tid } = req;
 
