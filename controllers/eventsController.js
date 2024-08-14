@@ -1,9 +1,13 @@
+import { getEventFunction } from '../helpers/getEvent.js';
 import { Digital, Event, Other, Post, Print, Tshirt } from '../models/index.js';
 
 export const getEvent = async (req, res) => {
     const eventId = req.params.id;
+    const { type } = req.query;
+
     try {
-        const event = await Event.findById(eventId).populate('user', 'name');
+        // const event = await Event.findById(eventId).populate('user', 'name');
+        const event = await getEventFunction(eventId, type);
         
         if (!event) {
             return res.status(404).json({
