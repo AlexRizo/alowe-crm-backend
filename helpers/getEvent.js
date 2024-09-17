@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const collections = ['event', 'digital', 'other', 'post', 'print', 'tshirt'];
+const collections = ['events', 'digitals', 'others', 'posts', 'prints', 'tshirts'];
 
 const getType = (type) => {
     return (
@@ -23,6 +23,7 @@ export const getEventFunction = async (id = '', type = '') => {
         const task = await mongoose.connection.db.collection(collection).findOne({
             _id: new mongoose.Types.ObjectId(id)
         });
+        console.log({task, type, id});
         if (task) return task;
     }
 };
