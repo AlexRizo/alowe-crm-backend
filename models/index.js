@@ -6,3 +6,4 @@ export { default as User } from './User.js';
 export { default as Digital } from './Digital.js';
 export { default as Tshirt } from './Tshirt.js';
 export { default as Other } from './Other.js';
+export { default as Server } from './Server.js';
