@@ -36,6 +36,7 @@ class Server {
         this.connectDB();
         this.middlewares();
         this.routes();
+        this.sockets();
     }
 
     async connectDB() {
@@ -57,9 +58,9 @@ class Server {
         this.app.use(this.paths.events, EventsRoutes);
         this.app.use(this.paths.team, TeamRoutes);
 
-        this.app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public/index.html'));
-        });
+        // this.app.get('*', (req, res) => {
+        //     res.sendFile(path.join(__dirname, 'public/index.html'));
+        // });
     }
 
     sockets() {
